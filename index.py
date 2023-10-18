@@ -13,5 +13,3 @@ def get_user_by_id(user_id):
 
     return result
 
-# Test
-print(get_user_by_id(1))

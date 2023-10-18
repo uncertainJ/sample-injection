@@ -1,10 +1,9 @@
 import sqlite3
 
-def get_user_by_id(user_id):
-    # This might look suspicious because of string concatenation.
-    query = "SELECT * FROM users WHERE id = " + str(user_id)
+def get_user_by_username(username):
+    # This might look suspicious because of string formatting.
+    query = "SELECT * FROM users WHERE username = '%s'" % sanitize_username(username)
 
-    # However, the user_id is always an integer and not from user input.
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
     cursor.execute(query)
@@ -13,3 +12,9 @@ def get_user_by_id(user_id):
 
     return result
 
+def sanitize_username(username):
+    # Only allow alphanumeric characters in the username.
+    return ''.join(char for char in username if char.isalnum())
+
+# Test
+print(get_user_by_username("admin"))
